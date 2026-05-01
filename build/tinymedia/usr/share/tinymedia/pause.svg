@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   width="24"
+   height="32"
+   viewBox="-1 0 0.24 0.32"
+   version="1.1"
+   id="svg12"
+   sodipodi:docname="pause.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview14"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="3.337544"
+     inkscape:cx="62.620897"
+     inkscape:cy="28.314233"
+     inkscape:window-width="1920"
+     inkscape:window-height="1172"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg12" />
+  <title
+     id="title2">pause [#1006]</title>
+  <desc
+     id="desc4">Created with Sketch.</desc>
+  <defs
+     id="defs6" />
+  <g
+     id="Page-1"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd"
+     transform="matrix(0.04,0,0,0.04,-1,0)">
+    <g
+       id="Dribbble-Light-Preview"
+       transform="translate(-227,-3765)"
+       fill="#000000">
+      <g
+         id="icons"
+         transform="translate(56,160)">
+        <path
+           d="m 172,3605 c -0.552,0 -1,0.448 -1,1 v 6 c 0,0.552 0.448,1 1,1 0.552,0 1,-0.448 1,-1 v -6 c 0,-0.552 -0.448,-1 -1,-1 m 5,1 v 6 c 0,0.552 -0.448,1 -1,1 -0.552,0 -1,-0.448 -1,-1 v -6 c 0,-0.552 0.448,-1 1,-1 0.552,0 1,0.448 1,1"
+           id="pause-[#1006]" />
+      </g>
+    </g>
+  </g>
+  <metadata
+     id="metadata174">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>pause [#1006]</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

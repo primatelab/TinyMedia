@@ -1,0 +1,140 @@
+#!/usr/bin/env bash
+
+#         ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+#      ⢹⠁ ⠄ ⣀⡀ ⡀⢀ ⡷⢾ ⢀⡀ ⢀⣸ ⠄ ⢀⣀
+#      ⠸  ⠇ ⠇⠸ ⣑⡺ ⠇⠸ ⠣⠭ ⠣⠼ ⠇ ⠣⠼
+#         ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+#  An unobtrusive control widget for MOC
+
+mocstate () {
+  mocp --format %state 2>/dev/null
+  [[ $? -ne 0 ]] && echo NOPE
+}
+
+mocsong () {
+  song=$(mocp -Q %song)
+  [[ -z $song ]] && song=$(mocp -Q %file | sed 's%^.*/%%')
+  [[ ${#song} -gt 20 ]] && song="${song:0:18}..."
+  echo $song
+}
+
+mocplay () {
+  mocp --play
+  mocp --on=shuffle
+  mocp --next
+}
+
+menuCommand () {
+  case "$1" in
+    playlist ) 
+      dims=( $(xrandr | grep 'connected primary' | grep -o '[0-9]*x[0-9]*+[0-9]*+[0-9]*' | sed 's/[x+]/ /g') )
+      x=$(bc <<< "${dims[0]} + ${dims[2]} - 850")
+      y=$(bc <<< "${dims[1]} + ${dims[3]} - 650")
+      [[ -d "$HOME/Music" ]] && cd $HOME/Music
+      playit=$(mktemp)
+      yad --file --skip-taskbar --title="File or Playlist" \
+          --file-filter='Playlist (m3u)|*.m3u' \
+          --mime-filter='Audio (mp3,aac,etc.)|audio/aac audio/aiff audio/basic audio/mid audio/mp4 audio/mpeg audio/ogg audio/wav' \
+          --width=800 \
+          --height=600 \
+          --posx=$x \
+          --posy=$y \
+          --multiple --separator=$'\n' | while read selection; do
+        if [[ $selection == *.m3u ]]; then
+          mocp --clear
+          mocp --append $selection
+          mocplay
+          break
+        elif [[ -f $selection ]]; then
+          echo $selection > $playit
+        fi
+        mocp --append $selection
+      done
+      [[ -f $(cat $playit) ]] && mocp --playit $(cat $playit)
+      rm -f $playit
+    ;;
+    startmoc )
+      mocp --server &>/dev/null
+      [[ $? -eq 0 ]] && mocplay
+    ;;
+    stopmoc  ) mocp --exit ;;
+  esac
+}
+
+systray () {
+  [[ $(pgrep -fc $0) -gt 1 ]] && return 1
+  menuCommand startmoc
+  while true; do
+    song=$(mocsong)
+    case $(mocstate) in
+      PLAY )
+        echo "tooltip:${song}"
+        echo "icon:/usr/share/tinymedia/tinymedia-light.svg"
+        echo "menu:Load Playlist/Media%$0 menuCommand playlist|Stop MOC%$0 menuCommand stopmoc|Exit%quit"
+        sleep 5 # cut down on unnecessary status calls
+      ;;
+      PAUSE )
+        echo "tooltip:⏸  ${song}"
+        echo "icon:/usr/share/tinymedia/tinymedia-dark.svg"
+        echo "menu:Load Playlist/Media%$0 menuCommand playlist|Stop MOC%$0 menuCommand stopmoc|Exit%quit"
+        sleep 5 # cut down on unnecessary status calls
+      ;;
+      STOP ) 
+        echo "tooltip:MOC Stopped"
+        echo "icon:/usr/share/tinymedia/tinymedia-dark.svg"
+        echo "menu:Load Playlist/Media%$0 menuCommand playlist|Stop MOC%$0 menuCommand stopmoc|Exit%quit"
+      ;;
+      NOPE ) 
+        echo "tooltip:MOC not running"
+        echo "icon:/usr/share/tinymedia/tinymedia-dark.svg"
+        echo "menu:Start MOC%$0 menuCommand startmoc|Exit%quit"
+      ;;
+    esac
+    sleep 0.5
+  done  | yad --notification --listen --image="/usr/share/tinymedia/tinymedia-light.svg" --text="TinyMedia" \
+              --item-separator=% \
+              --no-middle \
+              --menu="Start MOC%$0 menuCommand startmoc|Stop MOC%$0 menuCommand stopmoc|Exit%quit" \
+              --command="$0 widget"
+}
+
+widget () {
+  if [[ $(mocstate) != 'NOPE' ]]; then
+    if [[ $(pgrep -cf "bash $0 widget") -gt 1 ]]; then
+      pkill -f "yad --bashtag"
+      pkill -f "bash $0 widget"
+    else
+      dims=( $(xrandr | grep 'connected primary' | grep -o '[0-9]*x[0-9]*+[0-9]*+[0-9]*' | sed 's/[x+]/ /g') )
+      x=$(bc <<< "${dims[0]} + ${dims[2]} - 280")
+      y=$(bc <<< "${dims[1]} + ${dims[3]}")
+          # --title="TinyMedia - $(mocsong)" \
+          # --window-icon="$tmpdir/music-light.png" \
+      yad --bashtag \
+          --skip-taskbar \
+          --undecorated \
+          --button='!'"/usr/share/tinymedia/play.svg"'!'"Play:1" \
+          --button='!'"/usr/share/tinymedia/pause.svg"'!'"Pause:2" \
+          --button='!'"/usr/share/tinymedia/next.svg"'!'"Next:3" \
+          --posx=$x \
+          --posy=$y
+      case $? in
+        1 ) 
+          [[ $(mocstate) == 'STOP' ]] && mocplay
+          mocp --unpause 
+        ;;
+        2 ) mocp --pause ;;
+        3 ) mocp --next ;;
+      esac
+    fi
+  else
+    notify-send TinyMedia "MOC is not running."
+  fi
+}
+
+case "${1}" in
+  menuCommand ) shift; menuCommand "$@" ;;
+  widget      ) widget & ;;
+  *           ) systray &>/dev/null & ;;
+esac
+
+# menuCommand startmoc

@@ -1,0 +1,22 @@
+TinyMedia(1) -- Unobrtusive Music Player
+=============================================
+
+## SYNOPSIS
+
+`TinyMedia` is a widget to play music as unobtrusively as possible.
+There are three buttons - Play, Pause, and Next. That's it.
+
+## DESCRIPTION
+
+Tinymedia controls *MOC - music on console* (https://moc.daper.net)
+from the system tray. Click on the icon to get the control widget.
+Right-click on it to load an audio file or playlist.
+
+## SUPPORTED FORMATS
+
+**Music:** Most common formats. *.mp3*, *.aac*, *.aiff*, *.midi*, *.ogg*, *.wav* etc.
+**Playlists:** *.m3u* playlists.
+
+## HOMEPAGE
+
+https://github.com/primatelab/TinyMedia

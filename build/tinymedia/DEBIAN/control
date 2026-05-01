@@ -1,0 +1,8 @@
+Package: TinyMedia
+Version: 1.0
+Section: media
+Priority: optional
+Architecture: amd64
+Depends: moc, yad
+Maintainer: PrimateLab <github.com/PrimateLab>
+Description: Unobtrusive music widget

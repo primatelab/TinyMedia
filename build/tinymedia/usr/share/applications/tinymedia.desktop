@@ -1,0 +1,16 @@
+[Desktop Entry]
+Name=TinyMedia
+Comment=Unobtrusive mocp controls
+Exec=/usr/bin/tinymedia
+Categories=AudioVideo
+Terminal=false
+PrefersNonDefaultGPU=false
+Icon=tinymedia
+Type=Application
+Hidden=false
+NoDisplay=false
+Name[en_GB]=TinyMedia
+Exec[en_GB]=/usr/bin/tinymedia
+Comment[en_GB]=Unobtrusive music widget
+Icon[en_GB]=tinymedia
+Type[en_GB]=Application

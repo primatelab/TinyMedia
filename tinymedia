@@ -6,6 +6,8 @@
 #         ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 #  An unobtrusive control widget for MOC
 
+imgdir="${0%/*}/images"
+
 mocstate () {
   mocp --format %state 2>/dev/null
   [[ $? -ne 0 ]] && echo NOPE
@@ -54,8 +56,7 @@ menuCommand () {
       rm -f $playit
     ;;
     startmoc )
-      mocp --server &>/dev/null
-      [[ $? -eq 0 ]] && mocplay
+      mocp --server &>/dev/null && mocplay
     ;;
     stopmoc  ) mocp --exit ;;
   esac
@@ -69,29 +70,33 @@ systray () {
     case $(mocstate) in
       PLAY )
         echo "tooltip:${song}"
-        echo "icon:${0%/*}/tinymedia-light.svg"
+        echo "icon:$imgdir/tinymedia-light.svg"
         echo "menu:Load Playlist/Media%$0 menuCommand playlist|Stop MOC%$0 menuCommand stopmoc|Exit%quit"
         sleep 5 # cut down on unnecessary status calls
       ;;
       PAUSE )
         echo "tooltip:⏸  ${song}"
-        echo "icon:${0%/*}/tinymedia-dark.svg"
+        echo "icon:$imgdir/tinymedia-dark.svg"
         echo "menu:Load Playlist/Media%$0 menuCommand playlist|Stop MOC%$0 menuCommand stopmoc|Exit%quit"
         sleep 5 # cut down on unnecessary status calls
       ;;
       STOP ) 
         echo "tooltip:MOC Stopped"
-        echo "icon:${0%/*}/tinymedia-dark.svg"
+        echo "icon:$imgdir/tinymedia-dark.svg"
         echo "menu:Load Playlist/Media%$0 menuCommand playlist|Stop MOC%$0 menuCommand stopmoc|Exit%quit"
       ;;
       NOPE ) 
         echo "tooltip:MOC not running"
-        echo "icon:${0%/*}/tinymedia-dark.svg"
+        echo "icon:$imgdir/tinymedia-dark.svg"
         echo "menu:Start MOC%$0 menuCommand startmoc|Exit%quit"
       ;;
     esac
+    if [[ -f "/tmp/tinymediakillswitch" ]]; then
+      rm -f /tmp/tinymediakillswitch
+      exit
+    fi
     sleep 0.5
-  done  | yad --notification --listen --image="${0%/*}/tinymedia-light.svg" --text="TinyMedia" \
+  done  | yad --notification --listen --image="$imgdir/tinymedia-light.svg" --text="TinyMedia" \
               --item-separator=% \
               --no-middle \
               --menu="Start MOC%$0 menuCommand startmoc|Stop MOC%$0 menuCommand stopmoc|Exit%quit" \
@@ -112,9 +117,9 @@ widget () {
       yad --bashtag \
           --skip-taskbar \
           --undecorated \
-          --button='!'"${0%/*}/play.svg"'!'"play:1" \
-          --button='!'"${0%/*}/pause.svg"'!'"pause:2" \
-          --button='!'"${0%/*}/next.svg"'!'"next:3" \
+          --button='!'"$imgdir/play.svg"'!'"Play:1" \
+          --button='!'"$imgdir/pause.svg"'!'"Pause:2" \
+          --button='!'"$imgdir/next.svg"'!'"Next:3" \
           --posx=$x \
           --posy=$y
       case $? in
@@ -134,7 +139,6 @@ widget () {
 case "${1}" in
   menuCommand ) shift; menuCommand "$@" ;;
   widget      ) widget & ;;
+  quit        ) touch /tmp/tinymediakillswitch ;;
   *           ) systray &>/dev/null & ;;
 esac
-
-# menuCommand startmoc

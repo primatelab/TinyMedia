@@ -1,6 +1,6 @@
-# The "Holding It For a Friend" License (HIFFL) v0.1
+The "Holding It For a Friend" License (HIFFL) v0.1
 
-Copyright (c) \[Year] \[Name]
+Copyright (c) 2026 PrimateLAb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit others to do so, subject to the following conditions:
 
@@ -11,14 +11,14 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 5. The Alleged Author maintains that if they were the author of this Software (which they aren't), they would have written it for personal use, not for financial gain, which really ought to be legal anyway.
 6. If the Software functions correctly, the credit belongs to the mysterious friend. If it fails catastrophically, no one has ever heard of either party.
 
-## Disclaimer of Warranty
+Disclaimer of Warranty
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
 
-## Limitation of Liability
+Limitation of Liability
 
 IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-## Final Note
+Final Note
 
 If anyone asks, this repository was definitely, absolutely, and unquestionably being held for a friend. Which friend? That's outside the scope of this license.

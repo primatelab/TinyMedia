@@ -6,6 +6,7 @@
 #         ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 #  An unobtrusive control widget for MOC
 
+# imgdir="${0%/*}/images"
 imgdir="/usr/share/tinymedia/"
 
 mocstate () {
